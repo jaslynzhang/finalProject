@@ -1,13 +1,29 @@
 #Install packages if needed
 #install.packages('quantmod')
 #install.packages('googleVis')
-
+if (!("quantmod" %in% row.names(installed.packages()))) {
+  install.packages("quantmod")
+}
+if (!("shiny" %in% row.names(installed.packages()))) {
+  install.packages("shiny")
+}
+if (!("rvest" %in% row.names(installed.packages()))) {
+  install.packages("rvest")
+}
+if (!("magrittr" %in% row.names(installed.packages()))) {
+  install.packages("magrittr")
+}
+if (!("shinyjs" %in% row.names(installed.packages()))) {
+  install.packages("shinyjs")
+}
+if (!("googleVis" %in% row.names(installed.packages()))) {
+  install.packages("googleVis")
+}
 require(quantmod)
 require(shiny)
 require(rvest)
 require(magrittr)
 require(shinyjs)
-require(quantmod)
 require(googleVis)
 #Get name list of s&p 500 companies or tickers
 page=read_html("http://www.barchart.com/stocks/sp500.php?_dtp1=0")
