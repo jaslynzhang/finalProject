@@ -1,0 +1,39 @@
+---
+title: "Sta 323 - Final Project - Spring 2016"
+author: "Isabella Yang, Jaslyn Zhang"
+date: "May 7, 2016"
+output: rmarkdown::html_document
+runtime: shiny
+---
+
+<br/><br/>
+
+This shiny app calls on a variety of external packages and functions to
+1) track S&P 500 company stocks in real time (interactive graph)
+2) provide summary statistics for any given time frame
+3) allow comparison between two S&P companies (open, close, high, low, volume, etc)
+4) allow comparson between S&P baseline
+5) tentatively fit the data using basic exponential smoothing (Holt, Winters, Brown method)
+
+## Web Scrape
+We accessed a url ("http://www.barchart.com/stocks/sp500.php?_dtp1=0") to compile the list of S&P 500 companies and tickers. This file is automatically compiled every time Shiny is opened to ensure robustness when there is a change of the listing companies. 
+
+## Shiny App
+ShinyUI includes a sidebar for users to input ticker, comparison metric, time frame etc, a main panel for graphs with action buttons and a bottom chart for summary statistics.
+
+Shiny Server accesses yahoo and updates the time series dataset based on user input. The data is then passed to `renderGvis` to create interactive graphs and`renderDataTable` to pull up the summary statistics. Users can choose to display any of the three graphs by clicking on the action button.  
+
+## Exponential Smoothing
+We used exponential smoothing to fit stock prices, which is a time series dataset with a lot of noise. We attempted to tease out the noise using basic exponential smoothing. 
+
+We chose this technique because it does not require any minimum number of observations to produce results, which is ideal in this case since we allow users to input any time period. The following code gives an example of how we executed exponential smoothing for our data. 
+
+```{r, eval = FALSE}
+ output$p1<-renderPlot({
+     plot(HoltWinters(ts(dataInputP()$close,start=c(2007,1,3),frequency=252), gamma=FALSE))
+      
+    })
+```
+
+ 
+ 
